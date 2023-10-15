@@ -4,7 +4,7 @@ library(dplyr)
 library(readr)
 
 
-paths<- read.csv('./Data/pathways_names_file.csv')
+paths<- read.csv('./pathways_names_file.csv')
 # Define UI
 
 ui <- fluidPage(
@@ -117,8 +117,8 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   #Load files and pre-process
-  coldata <- read_tsv('./Data/E-ENAD-46-experiment-design.tsv')
-  lung_data <- read_delim('./Data/E-ENAD-46-raw-counts.tsv',delim = '\t')
+  coldata <- read_tsv('./E-ENAD-46-experiment-design.tsv')
+  lung_data <- read_delim('./E-ENAD-46-raw-counts.tsv',delim = '\t')
   lung_data_good <- lung_data[,3:40]
   row.names(lung_data_good) <- lung_data$`Gene ID`
   rm(lung_data)
