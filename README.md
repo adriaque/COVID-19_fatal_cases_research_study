@@ -28,7 +28,7 @@ Usage
 
 ## Demo Video
 
-In this section tyuo can see a desmostration on how to run and use all the app features.
+In this section, you can explore a demonstration illustrating how to effectively operate and utilize all the features of the application.
 
 https://github.com/adriaque/COVID-19_fatal_cases_research_study/assets/113828670/cbbc0bcb-3098-47db-9db6-f6a49ac0ff68
 
