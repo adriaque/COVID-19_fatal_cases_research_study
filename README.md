@@ -26,6 +26,12 @@ To run this Shiny app on your local machine, follow these steps:
 5. Run the Shiny App: Open the app.R file in RStudio and click the "Run App" button to launch the Shiny application.
 Usage
 
+## Demo Video
+
+In this section tyuo can see a desmostration on how to run and use all the app features.
+
+https://github.com/adriaque/COVID-19_fatal_cases_research_study/assets/113828670/cbbc0bcb-3098-47db-9db6-f6a49ac0ff68
+
 ## Contact and Contributing
 
 Feel free to contribute to this project by opening issues, suggesting improvements, or creating pull requests.
