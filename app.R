@@ -118,10 +118,10 @@ server <- function(input, output) {
   
   #Load files and pre-process
   coldata <- read_tsv('./E-ENAD-46-experiment-design.tsv')
-  lung_data <- read_delim('./E-ENAD-46-raw-counts.tsv',delim = '\t')
-  lung_data_good <- lung_data[,3:40]
-  row.names(lung_data_good) <- lung_data$`Gene ID`
-  rm(lung_data)
+  count_data <- read_delim('./E-ENAD-46-raw-counts.tsv',delim = '\t')
+  count_data_good <- count_data[,3:40]
+  row.names(count_data_good) <- count_data$`Gene ID`
+  rm(count_data)
   
   
   # Create a data frame representing the design matrix
@@ -130,7 +130,7 @@ server <- function(input, output) {
   
   # Create a DESeqDataSet object
   library(DESeq2)
-  dds_data <- DESeqDataSetFromMatrix(countData = lung_data_good, colData = design, design = ~ Condition + Tissue)
+  dds_data <- DESeqDataSetFromMatrix(countData = count_data_good, colData = design, design = ~ Condition + Tissue)
   
   rm(coldata)
   
@@ -220,7 +220,7 @@ server <- function(input, output) {
       
       # Create a PCA plot
       pca_data <- as.data.frame(pca_result$x)
-      rownames(pca_data) <- colnames(lung_data_good)
+      rownames(pca_data) <- colnames(count_data_good)
       pca_data$Condition <- dds$Condition
       pca_data$Tissue <- dds$Tissue
       
@@ -331,14 +331,14 @@ server <- function(input, output) {
   #Pre-processing for hypathia visualisation
   #Translation ENSEMBL to ENTREZ
   library(hipathia)
-  trans_lung <- translate_data(as.matrix(lung_data_good), "hsa") 
+  trans_data <- translate_data(as.matrix(count_data_good), "hsa") 
   
   #Pre-processing
-  trans_lung <- normalize_data(trans_lung)
+  trans_data <- normalize_data(trans_data)
   
   groups_names <- c('Reference_Lung','COVID_Lung','COVID_Lung','COVID_Lung','COVID_Lung','COVID_Lung','COVID_Lung','COVID_Lung','Reference_Lung','Reference_Lung','Reference_Lung','Reference_Lung','Reference_Lung','Reference_Lung','Reference_Lung','Reference_Lung','Reference_Lung','COVID_Lung','COVID_Lung','Reference_Colon','COVID_Colon','COVID_Colon','COVID_Colon','COVID_Colon','COVID_Colon','COVID_Colon','COVID_Colon','COVID_Colon','COVID_Colon','Reference_Colon','Reference_Colon','Reference_Colon','Reference_Colon','Reference_Colon','Reference_Colon','Reference_Colon','Reference_Colon','Reference_Colon')
   groups <- data.frame(groups_names)
-  row_names <- colnames(lung_data_good)
+  row_names <- colnames(count_data_good)
   rownames(groups)<- row_names
   
   observeEvent(input$runButton_3,{
@@ -348,7 +348,7 @@ server <- function(input, output) {
       selected_path <- input$path
       seledcted_hsa <- paths$pathway_ids[paths$all_pathway_names == selected_path]
       
-      data <-SummarizedExperiment(assays=SimpleList(raw=trans_lung),
+      data <-SummarizedExperiment(assays=SimpleList(raw=trans_data),
                                   colData=groups)
       
       pathways_only <- load_pathways(species = "hsa", pathways_list = seledcted_hsa)
