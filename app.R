@@ -4,9 +4,9 @@ library(dplyr)
 library(readr)
 
 
-paths<- read.csv('./pathways_names_file.csv')
-# Define UI
+paths<- read.csv('./pathways_names_file.csv') #names of the Hipathia pathways
 
+# Define UI
 ui <- fluidPage(
   
   titlePanel("COVID-19 Fatal cases (Lung and Colon) research study"),
@@ -117,8 +117,8 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   #Load files and pre-process
-  coldata <- read_tsv('./E-ENAD-46-experiment-design.tsv')
-  count_data <- read_delim('./E-ENAD-46-raw-counts.tsv',delim = '\t')
+  coldata <- read_tsv('./E-ENAD-46-experiment-design.tsv') #experiment design
+  count_data <- read_delim('./E-ENAD-46-raw-counts.tsv',delim = '\t') #raw counts file
   count_data_good <- count_data[,3:40]
   row.names(count_data_good) <- count_data$`Gene ID`
   rm(count_data)
@@ -304,8 +304,6 @@ server <- function(input, output) {
       else {res_filtered_1=res_filtered_1 %>% filter(log2FoldChange< -(input$log2FCcutoff))}
       
       
-      
-      #Change the input up or down regulated genes
       test_input_ENSEMBL <- rownames(res_filtered_1)
       rm(res_filtered_1)
       
